@@ -15,6 +15,20 @@ void setup() {
   loc = new Vec3D(width/2,height/2,-400);
   dir = new Vec3D(0,0,1);  
   up  = new Vec3D(0,1,0);
+  
+  //sound:::
+  minim = new Minim(this);
+  out = minim.getLineOut();
+ 
+  wave = new Oscil( 260, 0.5f, Waves.SINE );
+  wave2= new Oscil( 200, 0.5f, Waves.SINE );
+  wave3= new Oscil( 180, 0.5f, Waves.SINE );
+
+  wave.patch( out );
+  wave2.patch( out );
+  wave3.patch(out);
+
+  wave2.setAmplitude(.2);
 }
 
 void draw() {
