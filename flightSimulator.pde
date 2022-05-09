@@ -4,13 +4,12 @@ PImage space;
 PShape environment;
 Vec3D loc, dir, up;
 Set<Character> movements = new HashSet<Character>();
+boolean locked = false;
 
 void setup() {
   size(800,800,P3D);
-  noFill();
-  //noStroke();
   space = loadImage("stars.jpg");
-  environment = createShape(SPHERE, 400);
+  environment = createShape(SPHERE,width*4);
   environment.setTexture(space);
   loc = new Vec3D(width/2,height/2,-400);
   dir = new Vec3D(0,0,1);  
@@ -32,39 +31,42 @@ void setup() {
 }
 
 void draw() {
-  strokeWeight(4);
+  strokeWeight(1);
   fill(255);
   
-  pushMatrix();
-  resetMatrix();
-  camera(width/2,height/2,-400,width/2,height/2,0,0,1,0);
-  rect(375,375,425,425);
-  popMatrix();
-  
-  rollAndYaw();
+  if(!locked) rollAndYaw();
   doMovement();
   setCamera();
+  perspective(PI/3.0, width/height, 0.01, 10000);
   ambientLight(100,100,100);
   pushMatrix();
-  translate(width/2, height/2);
-  background(0);
-  fill(50,50,255);
-  box(100);
-  translate(100,-75,-200);
-  fill(50,255,50);
-  sphere(60);
-  translate(-200, 125, 100);
-  fill(255,75,100);
-  box(40);
+    translate(width/2, height/2);
+    background(0);
+    stroke(0);
+    fill(50,50,255);
+    box(100);
+    translate(100,-75,-200);
+    fill(50,255,50);
+    sphere(60);
+    translate(-200, 125, 100);
+    fill(255,75,100);
+    box(40);
   popMatrix();
+  
   pushMatrix();
-  resetMatrix();
-  stroke(255);
-  strokeWeight(10);
-  rect(375,375,425,425);
+  translate(loc.x, loc.y, loc.z);
+  shape(environment);
   popMatrix();
-  //translate(loc.x,loc.y,loc.z);
-  //shape(environment);
+  
+  pushMatrix();
+    resetMatrix();
+    noFill();
+    if(locked) stroke(255,0,0);
+    else stroke(255);
+    ortho();
+    rectMode(CORNERS);
+    rect(-buffer,-buffer,buffer,buffer);
+  popMatrix();
 }
 
 void doMovement() {
@@ -88,6 +90,9 @@ void doMovement() {
 }
 
 void keyPressed() {
+  if(key == 'l') {
+    locked = !locked; 
+  }
   if(key == ' ') {
     loc = new Vec3D(width/2,height/2,-400);
     dir = new Vec3D(0,0,1);  
@@ -101,7 +106,7 @@ void keyReleased() {
 }
 
 float turnFactor = 800f; // bigger -> slower roll/yaw 
-float buffer = 25f;
+float buffer = 20f;
 void rollAndYaw() {
   if(mouseX>400+buffer||mouseX<400-buffer||mouseY>400+buffer||mouseY<400-buffer) {
     Vec3D axis = up.cross(dir);
