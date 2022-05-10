@@ -46,14 +46,23 @@ void draw() {
   pushMatrix();
   
   
+<<<<<<< HEAD
   
+=======
+>>>>>>> 8f95793e31382572e7cf1965405cbe793a6c4bf1
     translate(width/2, height/2);
     background(0);
     stroke(0);
     fill(50,50,255);
+<<<<<<< HEAD
     //box(100);
     translate(120,-80,-67);
     fill(225,218,111);
+=======
+    box(100);
+    translate(120,-80,-67);
+    fill(225,218,112);
+>>>>>>> 8f95793e31382572e7cf1965405cbe793a6c4bf1
     //setTexture(neptune);
     sphere(51);
     //translate(-200, 125, 100);
@@ -63,6 +72,7 @@ void draw() {
     fill(225,218,112);
     rotateX(8.0);
     drawCylinder(32,110,29);
+<<<<<<< HEAD
     
     translate(-28,642,-375);
     
@@ -77,6 +87,9 @@ void draw() {
     stroke(1);
     //visSphere.display();
     //inviSphere.display();
+=======
+   
+>>>>>>> 8f95793e31382572e7cf1965405cbe793a6c4bf1
     
   popMatrix();
   
