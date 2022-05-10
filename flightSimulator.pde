@@ -44,18 +44,26 @@ void draw() {
   perspective(PI/3.0, width/height, 0.01, 10000);
   ambientLight(100,100,100);
   pushMatrix();
+  
+  
     translate(width/2, height/2);
     background(0);
     stroke(0);
     fill(50,50,255);
     box(100);
-    translate(100,-75,-200);
-    fill(50,255,50);
-    setTexture(neptune);
-    sphere(60);
-    translate(-200, 125, 100);
-    fill(255,75,100);
-    box(40);
+    translate(120,-80,-67);
+    fill(225,218,112);
+    //setTexture(neptune);
+    sphere(51);
+    //translate(-200, 125, 100);
+    //fill(255,75,100);
+    //box(40);
+    
+    fill(225,218,112);
+    rotateX(8.0);
+    drawCylinder(32,110,29);
+   
+    
   popMatrix();
   
   pushMatrix();
@@ -72,6 +80,39 @@ void draw() {
     rectMode(CORNERS);
     rect(-buffer,-buffer,buffer,buffer);
   popMatrix();
+}
+
+void drawCylinder(int sides, float r, float h)
+{
+    
+  
+    float angle = 360 / sides;
+    float halfHeight = h / 2;
+    // draw top shape
+    beginShape();
+    for (int i = 0; i < sides; i++) {
+        float x = cos( radians( i * angle ) ) * r;
+        float y = sin( radians( i * angle ) ) * r;
+        vertex( x, y, -halfHeight );    
+    }
+    endShape(CLOSE);
+    // draw bottom shape
+    beginShape();
+    for (int i = 0; i < sides; i++) {
+        float x = cos( radians( i * angle ) ) * r;
+        float y = sin( radians( i * angle ) ) * r;
+        vertex( x, y, halfHeight );    
+    }
+    endShape(CLOSE);
+    // draw body
+    beginShape(TRIANGLE_STRIP);  
+      for (int i = 0; i < sides + 1; i++) {
+      float x = cos( radians( i * angle ) ) * r;
+      float y = sin( radians( i * angle ) ) * r;
+      vertex( x, y, halfHeight);
+      vertex( x, y, -halfHeight);    
+    }
+    endShape(CLOSE);
 }
 
 void doMovement() {
