@@ -1,20 +1,26 @@
 import java.util.*;
 import toxi.geom.Vec3D;
-PImage space, saturn, neptune, mars;
+PImage space, saturn, neptune, mars, cyber;
 PShape environment;
 Vec3D loc, dir, up;
 Set<Character> movements = new HashSet<Character>();
 boolean locked = false;
+TextureSphere ts, es;
+TextureCyl cyl;
 //this one
 
 void setup() {
   size(800,800,P3D);
-  space = loadImage("stars.jpg");
+  space = loadImage("space.png");
   saturn = loadImage("saturn.jpg");
   neptune = loadImage("neptune.jpg");
   mars = loadImage("mars.jpg");
-  environment = createShape(SPHERE,width*4);
+  cyber = loadImage("cyber.jpg");
+  noStroke();
+  environment = createShape(SPHERE,width*3.5);
   environment.setTexture(space);
+  stroke(0);
+  es = new TextureSphere(width*4, 20, space);
   loc = new Vec3D(width/2,height/2,-400);
   dir = new Vec3D(0,0,1);  
   up  = new Vec3D(0,1,0);
@@ -46,35 +52,30 @@ void draw() {
   pushMatrix();
   
   
-<<<<<<< HEAD
-  
-=======
->>>>>>> 8f95793e31382572e7cf1965405cbe793a6c4bf1
     translate(width/2, height/2);
     background(0);
     stroke(0);
     fill(50,50,255);
-<<<<<<< HEAD
     //box(100);
     translate(120,-80,-67);
     fill(225,218,111);
-=======
-    box(100);
+    //box(100);
     translate(120,-80,-67);
     fill(225,218,112);
->>>>>>> 8f95793e31382572e7cf1965405cbe793a6c4bf1
     //setTexture(neptune);
-    sphere(51);
+    ts = new TextureSphere(51.0, 20, cyber);
+      ts.display();
+    //sphere(51);
     //translate(-200, 125, 100);
     //fill(255,75,100);
     //box(40);
     
     fill(225,218,112);
     rotateX(8.0);
-    drawCylinder(32,110,29);
-<<<<<<< HEAD
+    stroke(1);
+    //drawCylinder(32,110,29);
     
-    translate(-28,642,-375);
+    translate(-159,716,-251);
     
     Sphere oneSphere = new Sphere(new PVector(0, -80, 32), 70, 12);
     Sphere twoSphere = new Sphere(new PVector(-5, -60, 1), 70, 12);
@@ -87,15 +88,20 @@ void draw() {
     stroke(1);
     //visSphere.display();
     //inviSphere.display();
-=======
-   
->>>>>>> 8f95793e31382572e7cf1965405cbe793a6c4bf1
     
   popMatrix();
   
   pushMatrix();
+  translate(100,100,100);
+  cyl = new TextureCyl (100,25, cyber);
+  //cyl.display();
+  popMatrix();
+  
+  pushMatrix();
+  noStroke();
   translate(loc.x, loc.y, loc.z);
   shape(environment);
+  //es.display();
   popMatrix();
   
   pushMatrix();
@@ -105,7 +111,7 @@ void draw() {
     else stroke(255);
     ortho();
     rectMode(CORNERS);
-    rect(-buffer,-buffer,buffer,buffer);
+    rect(-300,-300,300,300);
   popMatrix();
 }
 

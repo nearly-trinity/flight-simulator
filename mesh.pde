@@ -1,6 +1,7 @@
 class Mesh3D {
   ArrayList<PVector> verts;
   ArrayList<int[]> tris;
+  PImage img2;
 
   Mesh3D() {
     verts = new ArrayList<PVector> ();
@@ -25,6 +26,7 @@ class Mesh3D {
   }
 
   void display(PImage img) {
+    img2 = img;
     beginShape(TRIANGLES);
     textureMode(IMAGE);
     texture(img);
@@ -54,7 +56,8 @@ class Mesh3D {
 
   private void vertexHelperTexture(int i) {
     PVector v = verts.get(i);
-    vertex(v.x, v.y, v.z, 0);
+    PVector u = verts.get(i);
+    vertex(v.x, v.y, v.z, 1, 1);
   }
 
   Mesh3D intersect(Mesh3D other) {
