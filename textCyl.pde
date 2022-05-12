@@ -9,12 +9,30 @@ class TextureCyl {
     img = texture;
   }
   
-  void display() {
-    beginShape(QUADS);
-    texture(img);
+    void display() {
     float uStep = 2*PI/nSegs;
     float vStep = PI/nSegs;
+    
+    beginShape(QUADS);
+    texture(img);
     for(float u=0; u<2*PI; u+=uStep) {
+      for(float v=-PI/2; v<PI/2; v+=vStep) {
+        createVertex(u,v);
+        createVertex(u+uStep,v);
+        createVertex(u+uStep,v+vStep);
+        createVertex(u,v+vStep);
+        
+      }
+    }
+    endShape();
+    
+    pushMatrix();
+    beginShape(QUADS);
+    texture(img);
+    translate(-29,-27,-1);
+    rotateX(0.4);
+    rotateY(-2.7);
+    for(float u=0; u<1.4*PI; u+=uStep) {
       for(float v=-PI/4; v<PI/4; v+=vStep) {
         createVertex(u,v);
         createVertex(u+uStep,v);
@@ -23,6 +41,24 @@ class TextureCyl {
       }
     }
     endShape();
+    popMatrix();
+    
+    pushMatrix();
+    beginShape(QUADS);
+    texture(img);
+    translate(41,27,0);
+    rotateX(-2.5);
+    rotateY(5.5);
+    for(float u=0; u<1.5*PI; u+=uStep) {
+      for(float v=-PI/4; v<PI/4; v+=vStep) {
+        createVertex(u,v);
+        createVertex(u+uStep,v);
+        createVertex(u+uStep,v+vStep);
+        createVertex(u,v+vStep);      
+      }
+    }
+    endShape();
+    popMatrix();
   }
   
   void createVertex(float u, float v) {

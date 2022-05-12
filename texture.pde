@@ -25,40 +25,6 @@ class TextureSphere {
       }
     }
     endShape();
-    
-    pushMatrix();
-    beginShape(QUADS);
-    texture(img);
-    translate(-27,-15,0);
-    rotateX(0.9);
-    rotateY(-2.8);
-    for(float u=0; u<1.5*PI; u+=uStep) {
-      for(float v=-PI/4; v<PI/4; v+=vStep) {
-        createVertex(u,v);
-        createVertex(u+uStep,v);
-        createVertex(u+uStep,v+vStep);
-        createVertex(u,v+vStep);      
-      }
-    }
-    endShape();
-    popMatrix();
-    
-    pushMatrix();
-    beginShape(QUADS);
-    texture(img);
-    translate(25,27,0);
-    rotateX(-2.0);
-    rotateY(5.6);
-    for(float u=0; u<1.5*PI; u+=uStep) {
-      for(float v=-PI/4; v<PI/4; v+=vStep) {
-        createVertex(u,v);
-        createVertex(u+uStep,v);
-        createVertex(u+uStep,v+vStep);
-        createVertex(u,v+vStep);      
-      }
-    }
-    endShape();
-    popMatrix();
   }
   
   void createVertex(float u, float v) {

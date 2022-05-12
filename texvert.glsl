@@ -1,4 +1,4 @@
-#define PROCESSING_TEXTURE_SHADER
+#define PROCESSING_TEXLIGHT_SHADER
 
 uniform mat4 transform;
 uniform mat4 texMatrix;

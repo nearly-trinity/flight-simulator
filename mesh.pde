@@ -1,10 +1,14 @@
 class Mesh3D {
   ArrayList<PVector> verts;
+  ArrayList<PVector> uvs;
+  ArrayList<PVector> norms;
   ArrayList<int[]> tris;
   PImage img2;
 
   Mesh3D() {
     verts = new ArrayList<PVector> ();
+    uvs = new ArrayList<PVector> ();
+    norms = new ArrayList<PVector> ();
     tris = new ArrayList<int[]> ();
   }
 
@@ -31,12 +35,24 @@ class Mesh3D {
     textureMode(IMAGE);
     texture(img);
     for (int[] tri : tris) {
-      triangleHelper(tri);
-      //triangleHelperTexture(tri);
+      //triangleHelper(tri);
+      normTriangleHelper(tri);
     }
     endShape();
   }
-
+  private void normTriangleHelper(int[] tri) {
+    normalHelper(tri[0]);
+    vertexHelper(tri[0]);
+    normalHelper(tri[1]);
+    vertexHelper(tri[1]);
+    normalHelper(tri[2]);
+    vertexHelper(tri[2]);
+  }
+  
+  private void normalHelper(int i) {
+    PVector n = norms.get(i);
+    normal(n.x,n.y,n.z);
+  }
   private void triangleHelper(int[] tri) {
     vertexHelper(tri[0]);
     vertexHelper(tri[1]);
@@ -56,7 +72,6 @@ class Mesh3D {
 
   private void vertexHelperTexture(int i) {
     PVector v = verts.get(i);
-    PVector u = verts.get(i);
     vertex(v.x, v.y, v.z, 1, 1);
   }
 
