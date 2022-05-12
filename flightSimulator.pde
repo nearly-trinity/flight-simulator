@@ -1,16 +1,18 @@
 import java.util.*;
 import toxi.geom.Vec3D;
-PImage space, saturn, neptune, mars, cyber;
+PImage space, saturn, neptune, mars, cyber, earthImage;
 PShape environment;
+PShader shade;
 Vec3D loc, dir, up;
 Set<Character> movements = new HashSet<Character>();
 boolean locked = false;
-TextureSphere ts, es;
+TextureSphere ts, es, earthModel;
 TextureCyl cyl;
-//this one
+Mesh3D sphereDiff2;
 
 void setup() {
   size(800,800,P3D);
+  earthImage = loadImage("earth.jpg");
   space = loadImage("space.png");
   saturn = loadImage("saturn.jpg");
   neptune = loadImage("neptune.jpg");
@@ -19,11 +21,20 @@ void setup() {
   noStroke();
   environment = createShape(SPHERE,width*3.5);
   environment.setTexture(space);
-  stroke(0);
   es = new TextureSphere(width*4, 20, space);
   loc = new Vec3D(width/2,height/2,-400);
   dir = new Vec3D(0,0,1);  
   up  = new Vec3D(0,1,0);
+  
+  Sphere oneSphere = new Sphere(new PVector(0, -80, 32), 70, 12);
+  Sphere twoSphere = new Sphere(new PVector(-5, -60, 1), 70, 12);
+  Sphere threeSphere = new Sphere(new PVector(-5, -40, 33), 70, 12);
+  
+  Mesh3D sphereDiff = oneSphere.union(twoSphere);
+  sphereDiff2 = sphereDiff.union(threeSphere);
+  
+  earthModel = new TextureSphere(51,10,earthImage);
+  shade = loadShader("texfrag.glsl", "texvert.glsl");
   
   //sound:::
   minim = new Minim(this);
@@ -43,49 +54,33 @@ void setup() {
 void draw() {
   strokeWeight(1);
   fill(255);
+  shader(shade);
   
   if(!locked) rollAndYaw();
   doMovement();
   setCamera();
   perspective(PI/3.0, width/height, 0.01, 10000);
   ambientLight(100,100,100);
-  pushMatrix();
   
   
+  
+  pushMatrix();  
     translate(width/2, height/2);
     background(0);
-    stroke(0);
-    fill(50,50,255);
-    //box(100);
+    noStroke();
+    rotateX(-PI/2);
+    earthModel.display();
+    rotateX(PI/2);
     translate(120,-80,-67);
     fill(225,218,111);
-    //box(100);
     translate(120,-80,-67);
     fill(225,218,112);
-    //setTexture(neptune);
     ts = new TextureSphere(51.0, 20, cyber);
-      ts.display();
-    //sphere(51);
-    //translate(-200, 125, 100);
-    //fill(255,75,100);
-    //box(40);
-    
-    fill(225,218,112);
+    ts.display();
+    //fill(225,218,112);
     rotateX(8.0);
-    stroke(1);
-    //drawCylinder(32,110,29);
-    
-    translate(-159,716,-251);
-    
-    Sphere oneSphere = new Sphere(new PVector(0, -80, 32), 70, 12);
-    Sphere twoSphere = new Sphere(new PVector(-5, -60, 1), 70, 12);
-    Sphere threeSphere = new Sphere(new PVector(-5, -40, 33), 70, 12);
-    
-    Mesh3D sphereDiff = oneSphere.union(twoSphere);
-    Mesh3D sphereDiff2 = sphereDiff.union(threeSphere);
-    
-    sphereDiff2.display(mars);
-    stroke(1);
+    translate(-159,716,-251);    
+    sphereDiff2.display(neptune);
     //visSphere.display();
     //inviSphere.display();
     
@@ -111,14 +106,12 @@ void draw() {
     else stroke(255);
     ortho();
     rectMode(CORNERS);
-    rect(-300,-300,300,300);
+    rect(-buffer,-buffer,buffer,buffer);
   popMatrix();
 }
 
-void drawCylinder(int sides, float r, float h)
-{
+void drawCylinder(int sides, float r, float h) {
     
-  
     float angle = 360 / sides;
     float halfHeight = h / 2;
     // draw top shape
