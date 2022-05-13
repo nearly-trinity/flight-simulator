@@ -1,9 +1,9 @@
-class TextureCyl {
+class spaceShip {
   int nSegs;
   float r;
   PImage img;
   
-  TextureCyl(float radius, int numSegments, PImage texture) {
+  spaceShip(float radius, int numSegments, PImage texture) {
     nSegs = numSegments;
     r = radius;
     img = texture;

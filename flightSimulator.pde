@@ -1,22 +1,19 @@
 import java.util.*;
 import toxi.geom.Vec3D;
-PImage space, saturn, neptune, mars, cyber, earthImage, meteor;
+PImage space, cyber, earthImage, meteor;
 PShape environment;
-PShader shade, shade1;
+PShader shade;
 Vec3D loc, dir, up;
 Set<Character> movements = new HashSet<Character>();
 boolean locked = false;
-TextureSphere ts, es, earthModel;
-TextureCyl cyl;
+TextureSphere ts, earthModel;
+spaceShip ship;
 Mesh3D sphereUn2;
 
 void setup() {
   size(800, 800, P3D);
   earthImage = loadImage("earth.jpg");
   space = loadImage("space.png");
-  saturn = loadImage("saturn.jpg");
-  neptune = loadImage("neptune.jpg");
-  mars = loadImage("mars.jpg");
   cyber = loadImage("cyber.jpg");
   meteor = loadImage("meteor.jpg");
   noStroke();
@@ -26,9 +23,9 @@ void setup() {
   dir = new Vec3D(0, 0, 1);
   up  = new Vec3D(0, 1, 0);
 
-  Sphere oneSphere = new Sphere(new PVector(0, -80, 32), 70, 12);
-  Sphere twoSphere = new Sphere(new PVector(-5, -60, 1), 70, 12);
-  Sphere threeSphere = new Sphere(new PVector(-5, -40, 33), 70, 12);
+  Sphere oneSphere = new Sphere(new PVector(-56, -80, 32), 65, 12);
+  Sphere twoSphere = new Sphere(new PVector(-3, 40, 1), 68, 12);
+  Sphere threeSphere = new Sphere(new PVector(-5, -58, 33), 72, 12);
 
   Mesh3D sphereUn = oneSphere.union(twoSphere);
   sphereUn2 = sphereUn.union(threeSphere);
@@ -36,7 +33,7 @@ void setup() {
   earthModel = new TextureSphere(60, 10, earthImage);
   shade = loadShader("texfrag.glsl", "texvert.glsl");
 
-  cyl = new TextureCyl(80.0, 20, cyber);
+  ship = new spaceShip(80.0, 20, cyber);
 
   //sound:::
   minim = new Minim(this);
@@ -63,26 +60,22 @@ void draw() {
   setCamera();
   perspective(PI/3.0, width/height, 0.01, 10000);
   ambientLight(100, 100, 100);
-
-
-
+  
   pushMatrix();
-  translate(width/2, height/2);
-  background(0);
-  noStroke();
-  rotateX(-PI/2);
-  earthModel.display();
-  rotateX(PI/2);
-  translate(120, -138, -67);
-  fill(225, 218, 161);
-  translate(234, -54, -79);
-  fill(225, 218, 112);
-  cyl.display();
-  //fill(225,218,112);
-  rotateX(8.0);
-  translate(-111, 1501, 430);
-  //sphereUn2.display(meteor);
-
+    translate(width/2 + -89, height/2 + 1, 12);
+    background(0);
+    noStroke();
+    rotateX(-PI/2);
+    earthModel.display();
+  
+    rotateX(PI/2);
+    translate(360, -123, -130);
+    ship.display();
+    
+    fill(194,177,127);
+    rotateX(8.0);
+    translate(-111, 1773, 335);
+    sphereUn2.display();
   popMatrix();
 
   pushMatrix();
